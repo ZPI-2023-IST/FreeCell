@@ -1,5 +1,5 @@
 from unittest import TestCase
-from card import Card
+from Card import Card
 
 class TestCard(TestCase):
 
