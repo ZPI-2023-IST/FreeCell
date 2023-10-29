@@ -1,5 +1,5 @@
 from unittest import TestCase
-from Freecell.Card import Card
+from Card import Card
 
 class TestCard(TestCase):
 
