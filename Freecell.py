@@ -1,6 +1,6 @@
-from game import Game
-from board import Board
-from deck import Deck
+from Game import Game
+from Board import Board
+from Deck import Deck
 
 class FreeCell(Game):
     def __init__(self):
