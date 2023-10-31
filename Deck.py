@@ -1,5 +1,6 @@
-from Card import Card
 from typing import Generator
+
+from Card import Card
 
 
 class Deck:
@@ -7,7 +8,7 @@ class Deck:
         self.seed = seed
         self.cards = list()
         for suit in ['h', 'd', 'c', 's']:
-            for rank in list(range(2, 10)) + ['T', 'J', 'Q', 'K', 'A']:
+            for rank in list(range(1, 14)):
                 self.cards.append(Card(rank, suit))
 
     def __repr__(self) -> str:
@@ -15,8 +16,6 @@ class Deck:
 
     def __str__(self) -> str:
         return f'{self.cards}'
-
-
 
     def _random_generator(self, seed: int) -> Generator[int, None, None]:
 
