@@ -36,4 +36,4 @@ class Card:
         if self.rank in self.rank_to_value:
             return f'{self.rank_to_value[self.rank]} + {self.suit}'
         else:
-            return {self.rank} + {self.suit}
+            return f'{self.rank} + {self.suit}'
