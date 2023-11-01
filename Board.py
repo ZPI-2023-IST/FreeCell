@@ -21,30 +21,68 @@ class Board:
         return self.free_cells.count(None) + self.columns.count([])
 
     def move_to_stack(self, card: Card) -> bool:
+        on_top, col = self.__is_on_top(card)
 
-        if self.suit_stack[card.suit] is None and card.rank == 1:
+        if not on_top:
+            return False
+
+        if (self.suit_stack[card.suit] is None and card.rank == 1) or (
+                self.suit_stack[card.suit] is not None and card.is_larger_and_same_suit(self.suit_stack[card.suit])):
             self.suit_stack[card.suit] = card
-            return True
-        elif self.suit_stack[card.suit] is not None and card.is_larger_and_same_suit(self.suit_stack[card.suit]):
-            self.suit_stack[card.suit] = card
+            col.pop()
             return True
 
         return False
 
-    def move_to_free_cell(self, card: Card) -> None:
+    def move_to_free_cell(self, card: Card) -> bool:
+
+        on_top, col = self.__is_on_top(card)
+
+        if not on_top:
+            return False
+
         if self.free_cells.count(None) > 0:
             for i in range(len(self.free_cells)):
                 if self.free_cells[i] is None:
                     self.free_cells[i] = card
-                    break
+                    col.pop()
+                    return True
+
+    def __is_on_top(self, card: Card) -> bool:
+        col = next((col for col in self.columns if card in col), None)
+
+        if card == col[-1]:
+            return True, col
+
+        return False, col
 
     def move_to_free_column(self, card: Card) -> bool:
-        if self.columns.count([]) > 0:
-            for i in range(len(self.columns)):
-                if not self.columns[i]:
-                    self.columns[i].append(card)
-                    return True
-        return False
+
+        # check if there is any free column
+        if self.columns.count([]) < 1:
+            return False
+
+        if card in self.free_cells:
+            return self.__move_card_from_free_cell(card, destination_card)
+
+        source_column = next((col for col in self.columns if card in col), None)
+        if source_column:
+            cards_to_move = source_column[source_column.index(card):]
+
+            valid_sequence = all(
+                card.is_smaller_and_different_color(prev_card)
+                for card, prev_card in zip(cards_to_move[1:], cards_to_move)
+            )
+
+            if len(cards_to_move) <= self.empty_cells() and valid_sequence:
+                self.columns[next(i for i, col in enumerate(self.columns) if not col)].extend(cards_to_move)
+
+                index_of_card_to_move = source_column.index(card)
+                source_column[index_of_card_to_move:] = source_column[:index_of_card_to_move]
+
+                return True # Move successful
+
+        return False # Move unsuccessful
 
     def __move_card_from_free_cell(self, card_to_move: Card, destination_card: Card) -> bool:
 
@@ -60,38 +98,34 @@ class Board:
 
     def move_to_card(self, card_to_move: Card, destination_card: Card) -> bool:
 
-        if card_to_move.is_smaller_and_different_color(destination_card):
+        if card_to_move.is_smaller_and_different_color(destination_card) and self.__is_on_top(destination_card):
 
             # Check if card is in free cell
             if card_to_move in self.free_cells:
                 return self.__move_card_from_free_cell(card_to_move, destination_card)
 
-            # Check if the move is valid
             # Find the source column and destination column
-            source_column = None
-            dest_column = None
+            dest_column = next((col for col in self.columns if destination_card in col), None)
 
-            # Locate the source column
-            for col in self.columns:
-                if card_to_move in col:
-                    source_column = col
-                    break
-
-            # Locate the destination column
-            for col in self.columns:
-                if destination_card in col:
-                    dest_column = col
-                    break
+            source_column = next((col for col in self.columns if card_to_move in col), None)
 
             # Check if both source and destination columns are found
             if source_column and dest_column:
                 # Determine the cards to move
                 cards_to_move = source_column[source_column.index(card_to_move):]
 
+                valid_sequence = all(
+                    card.is_smaller_and_different_color(prev_card)
+                    for card, prev_card in zip(cards_to_move[1:], cards_to_move)
+                )
+
                 # Check if there are enough empty cells
-                if len(cards_to_move) <= self.empty_cells():
+                if len(cards_to_move) <= self.empty_cells() and valid_sequence:
                     # Move the cards
                     dest_column.extend(cards_to_move)
-                    source_column = source_column[:source_column.index(card_to_move)]
+                    index_of_card_to_move = source_column.index(card_to_move)
+                    source_column[index_of_card_to_move:] = source_column[:index_of_card_to_move]
 
                     return True  # Move successful
+
+        return False
