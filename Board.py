@@ -36,6 +36,9 @@ class Board:
 
     def move_to_free_cell(self, card: Card) -> bool:
 
+        # TODO: maybe we can add that if card is second,third,... in column,
+        #  we can move every one move to free cell at once for now it only moves on at a time
+
         on_top, col = self.__is_on_top(card)
 
         if not on_top:
@@ -63,7 +66,7 @@ class Board:
             return False
 
         if card in self.free_cells:
-            return self.__move_card_from_free_cell(card, destination_card)
+            return self.__move_card_from_free_cell_to_empty_column(card)
 
         source_column = next((col for col in self.columns if card in col), None)
         if source_column:
@@ -80,21 +83,21 @@ class Board:
                 index_of_card_to_move = source_column.index(card)
                 source_column[index_of_card_to_move:] = source_column[:index_of_card_to_move]
 
-                return True # Move successful
+                return True  # Move successful
 
-        return False # Move unsuccessful
+        return False  # Move unsuccessful
 
-    def __move_card_from_free_cell(self, card_to_move: Card, destination_card: Card) -> bool:
+    def __move_card_from_free_cell_to_card(self, card_to_move: Card, destination_card: Card) -> bool:
+        self.columns[next(i for i, col in enumerate(self.columns) if destination_card in col)].append(card_to_move)
+        self.free_cells[self.free_cells.index(card_to_move)] = None
+        return True
 
-        # Check if the move is valid
-        if destination_card.is_smaller_and_different_color(card_to_move):
-            # Move the card
-            self.columns[self.columns.index(destination_card):].append(card_to_move)
-            self.free_cells[self.free_cells.index(card_to_move)] = None
 
-            return True
 
-        return False
+    def __move_card_from_free_cell_to_empty_column(self, card_to_move: Card) -> bool:
+        self.columns[next(i for i, col in enumerate(self.columns) if not col)].append(card_to_move)
+        self.free_cells[self.free_cells.index(card_to_move)] = None
+        return True
 
     def move_to_card(self, card_to_move: Card, destination_card: Card) -> bool:
 
@@ -102,7 +105,7 @@ class Board:
 
             # Check if card is in free cell
             if card_to_move in self.free_cells:
-                return self.__move_card_from_free_cell(card_to_move, destination_card)
+                return self.__move_card_from_free_cell_to_card(card_to_move, destination_card)
 
             # Find the source column and destination column
             dest_column = next((col for col in self.columns if destination_card in col), None)
