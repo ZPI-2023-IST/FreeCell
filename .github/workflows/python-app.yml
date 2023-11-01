@@ -52,11 +52,13 @@ jobs:
       run: |
         pip install coverage-badge
         coverage-badge -o coverage.svg
+        mv coverage.svg $GITHUB_WORKSPACE
 
     - name: Commit and push coverage badge
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
+        git checkout $GITHUB_REF
         git add coverage.svg
         git commit -m "Add coverage badge"
-        git push
+        git push origin HEAD:$GITHUB_REF
