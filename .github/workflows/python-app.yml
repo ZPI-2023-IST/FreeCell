@@ -45,8 +45,8 @@ jobs:
 
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v3
-      env:
-        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
 
     - name: Generate coverage badge
       run: |
@@ -61,4 +61,4 @@ jobs:
         git checkout $GITHUB_REF
         git add badges/coverage.svg
         git commit -m "Add coverage badge"
-        git push origin HEAD:$GITHUB_REF
+        git push origin $GITHUB_REF
