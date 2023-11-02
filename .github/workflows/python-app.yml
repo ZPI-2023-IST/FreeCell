@@ -61,5 +61,13 @@ jobs:
         git checkout $GITHUB_SHA
         git add badges/coverage.svg
         git commit -m "Add coverage badge"
-        git push origin $GITHUB_SHA:$GITHUB_REF
+        
+        # Set the Git credentials using your MY_PAT_TOKEN
+        git config --global credential.username "x-access-token"
+        git config --global credential.helper store
+        git config --global user.email "action@github.com"
+        git config --global user.name "GitHub Action"
+        
+        # Push to the repository using your PAT
+        git push https://$MY_PAT_TOKEN@github.com/your_username/your_repository.git $GITHUB_SHA:$GITHUB_REF
 
