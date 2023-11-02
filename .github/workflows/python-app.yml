@@ -59,7 +59,6 @@ jobs:
         git add badges/coverage.svg
         git commit -a -m "Add changes"
 
-    #  i want to push my changes to current branch
     -name: Push code
       - uses: ad-m/github-push-action@master
         with:
