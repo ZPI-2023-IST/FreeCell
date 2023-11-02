@@ -51,10 +51,13 @@ jobs:
         coverage-badge -o coverage.svg
         mv coverage.svg badges/
 
+    - name: Set Git User
+      run: |
+        git config --global user.email "action@github.com"
+        git config --global user.name "GitHub Action"
+
     - name: Commit and push coverage badge
       run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
         git checkout $GITHUB_REF
         git add badges/coverage.svg
         git commit -m "Add coverage badge"
