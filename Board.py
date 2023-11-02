@@ -89,8 +89,6 @@ class Board:
         self.free_cells[self.free_cells.index(card_to_move)] = None
         return True
 
-
-
     def __move_card_from_free_cell_to_empty_column(self, card_to_move: Card) -> bool:
         self.columns[next(i for i, col in enumerate(self.columns) if not col)].append(card_to_move)
         self.free_cells[self.free_cells.index(card_to_move)] = None
