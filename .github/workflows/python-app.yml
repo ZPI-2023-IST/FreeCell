@@ -61,6 +61,6 @@ jobs:
         git commit -m "Add changes"
 
     - name: Push changes
-      uses: ZPI-2023-IST/FreeCell/github-push-action@master
+      uses: ZPI-2023-IST/FreeCell/github-push-action@main
       with:
         branch: ${{ github.head_ref }}
