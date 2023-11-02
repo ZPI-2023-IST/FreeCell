@@ -12,10 +12,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
-        persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal access token.
-        fetch-depth: 0 # otherwise, there would be errors pushing refs to the destination repository.
+        ref: ${{ github.head_ref }}
+        fetch-depth: 0
     - name: Checkout code
       uses: actions/checkout@v2
 
@@ -60,8 +60,7 @@ jobs:
         git add badges/coverage.svg
         git commit -m "Add changes"
 
-    - name: Push changes to the current branch
+    - name: Push changes
       uses: ad-m/github-push-action@master
       with:
-        github_token: ${{ secrets.MY_PAT_TOKEN }}
-        branch: ${{ github.ref }}
+        branch: ${{ github.head_ref }}
