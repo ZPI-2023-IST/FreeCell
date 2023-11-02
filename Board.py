@@ -21,9 +21,9 @@ class Board:
         return self.free_cells.count(None) + self.columns.count([])
 
     def move_to_stack(self, card: Card) -> bool:
-        on_top, col = self.__is_on_top(card)
+        col = self.__is_on_top(card)
 
-        if not on_top:
+        if not col:
             return False
 
         if (self.suit_stack[card.suit] is None and card.rank == 1) or (
@@ -36,12 +36,9 @@ class Board:
 
     def move_to_free_cell(self, card: Card) -> bool:
 
-        # TODO: maybe we can add that if card is second,third,... in column,
-        #  we can move every one move to free cell at once for now it only moves on at a time
+        col = self.__is_on_top(card)
 
-        on_top, col = self.__is_on_top(card)
-
-        if not on_top:
+        if not col:
             return False
 
         if self.free_cells.count(None) > 0:
@@ -51,13 +48,13 @@ class Board:
                     col.pop()
                     return True
 
-    def __is_on_top(self, card: Card) -> bool:
+    def __is_on_top(self, card: Card) -> list:
         col = next((col for col in self.columns if card in col), None)
 
         if card == col[-1]:
-            return True, col
+            return col
 
-        return False, col
+        return []
 
     def move_to_free_column(self, card: Card) -> bool:
 
@@ -101,29 +98,21 @@ class Board:
 
     def move_to_card(self, card_to_move: Card, destination_card: Card) -> bool:
 
-        if card_to_move.is_smaller_and_different_color(destination_card) and self.__is_on_top(destination_card):
+        if card_to_move.is_smaller_and_different_color(destination_card):
 
             # Check if card is in free cell
             if card_to_move in self.free_cells:
                 return self.__move_card_from_free_cell_to_card(card_to_move, destination_card)
 
-            # Find the source column and destination column
-            dest_column = next((col for col in self.columns if destination_card in col), None)
+            dest_column =  self.__is_on_top(destination_card)
+            source_column = self.__is_on_top(card_to_move)
 
-            source_column = next((col for col in self.columns if card_to_move in col), None)
-
-            # Check if both source and destination columns are found
-            if source_column and dest_column:
+            if dest_column and source_column:
                 # Determine the cards to move
                 cards_to_move = source_column[source_column.index(card_to_move):]
 
-                valid_sequence = all(
-                    card.is_smaller_and_different_color(prev_card)
-                    for card, prev_card in zip(cards_to_move[1:], cards_to_move)
-                )
-
                 # Check if there are enough empty cells
-                if len(cards_to_move) <= self.empty_cells() and valid_sequence:
+                if len(cards_to_move) <= self.empty_cells():
                     # Move the cards
                     dest_column.extend(cards_to_move)
                     index_of_card_to_move = source_column.index(card_to_move)

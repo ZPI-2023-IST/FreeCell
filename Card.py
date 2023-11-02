@@ -6,6 +6,7 @@ class Card:
 
         self.rank_to_value = {
             1: 'A',
+            10: 'T',
             11: 'J',
             12: 'Q',
             13: 'K'
