@@ -53,4 +53,4 @@ class TestCard(TestCase):
         card2 = Card(10, 'h')
 
         self.assertEqual(str(card1), '6 + d')
-        self.assertEqual(str(card2), '10 + h')
+        self.assertEqual(str(card2), 'T + h')
