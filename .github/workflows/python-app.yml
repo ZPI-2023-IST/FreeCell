@@ -57,6 +57,7 @@ jobs:
         git config --global user.name "GitHub Action"
 
     - name: Commit and push coverage badge
+      token: ${{ secrets.MY_PAT_TOKEN }}
       run: |
         git checkout $GITHUB_SHA
         git add badges/coverage.svg
