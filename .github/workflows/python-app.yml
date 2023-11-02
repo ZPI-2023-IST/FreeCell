@@ -7,14 +7,15 @@ on:
   pull_request:
     branches:
       - main
-env:
-  GITHUB_TOKEN: ${{ secrets.MY_PAT_TOKEN }}
-
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
+    - uses: actions/checkout@v3
+      with:
+        ref: ${{ github.head_ref }}
+        fetch-depth: 0
     - name: Checkout code
       uses: actions/checkout@v2
 
@@ -51,3 +52,11 @@ jobs:
         pip install coverage-badge
         coverage-badge -o coverage.svg
         mv coverage.svg badges/
+
+    - name: Commit files and push changes
+      run: |
+        git config --local user.email "github@Actions.com"
+        git config --local user.name "github-actions[bot]"
+        git add badges/coverage.svg
+        git commit -m "Add changes"
+        git push --force origin  HEAD:${{ github.head_ref }}
