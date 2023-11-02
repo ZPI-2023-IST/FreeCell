@@ -68,6 +68,5 @@ jobs:
         git config --global user.email "action@github.com"
         git config --global user.name "GitHub Action"
         
-        # Push to the repository using your PAT
-        git push https://$MY_PAT_TOKEN@github.com/$GITHUB_REPOSITORY.git $GITHUB_REF:$GITHUB_REF
-
+        # Push to the current branch in the same repository
+        git push https://$MY_PAT_TOKEN@github.com/$GITHUB_REPOSITORY.git $GITHUB_REF
