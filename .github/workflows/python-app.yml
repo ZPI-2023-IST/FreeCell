@@ -53,11 +53,15 @@ jobs:
         coverage-badge -o coverage.svg
         mv coverage.svg badges/
 
-    - name: Commit and push changes
+    - name: Commit files
       run: |
         git config --local user.email "github@Actions.com"
-        git config --local user.name "GitHub Actions"
-        git checkout $GITHUB_REF  # Switch back to the branch you want to push to
+        git config --local user.name "github-actions[bot]"
         git add badges/coverage.svg
-        git commit -m "Add coverage badge"
-        git push
+        git commit -m "Add changes"
+
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.MY_PAT_TOKEN }}
+        branch: ${{ github.ref }}  # Replace with the branch name you want to push to
