@@ -9,8 +9,10 @@ on:
       - main
 
 jobs:
-  build:
+  env:
+    GITHUB_TOKEN: ${{ secrets.MY_PAT_TOKEN }}
 
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -62,11 +64,6 @@ jobs:
         git add badges/coverage.svg
         git commit -m "Add coverage badge"
         
-        # Set the Git credentials using your MY_PAT_TOKEN
-        git config --global credential.username "x-access-token"
-        git config --global credential.helper store
-        git config --global user.email "action@github.com"
-        git config --global user.name "GitHub Action"
-        
-        # Push to the current branch in the same repository
-        git push https://$MY_PAT_TOKEN@github.com/$GITHUB_REPOSITORY.git $GITHUB_REF
+        # Push to the repository using your PAT
+        git push https://GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY.git $GITHUB_REF
+
