@@ -64,5 +64,6 @@ jobs:
         git commit -m "Add coverage badge"
         
         # Push to the repository using your PAT
-        git push https://GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY.git $GITHUB_REF
+
+        git remote set-url --push origin https://GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY.git $GITHUB_REF
 
