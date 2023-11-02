@@ -59,6 +59,7 @@ jobs:
         git config --local user.name "github-actions[bot]"
         git add badges/coverage.svg
         git commit -m "Add changes"
+        echo {github.head_ref}
 
     - name: Fetch changes from the remote branch
       run: git fetch
@@ -66,8 +67,8 @@ jobs:
     - name: Update your local branch
       run: git pull origin ${{ github.ref }}
 
-    - name: Merge changes
-      run: git merge origin/${{ github.head_ref }}
+    - name: Merge changes from the remote branch into your branch
+      run: git merge origin/${{ github.head_ref }} --no-edit
 
     - name: Push changes to the current branch
       uses: ad-m/github-push-action@master
