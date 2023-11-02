@@ -7,8 +7,6 @@ on:
   pull_request:
     branches:
       - main
-env:
-  GITHUB_TOKEN: ${{ secrets.MY_PAT_TOKEN }}
 
 jobs:
   build:
@@ -51,3 +49,15 @@ jobs:
         pip install coverage-badge
         coverage-badge -o coverage.svg
         mv coverage.svg badges/
+
+    - name: Commit files
+      run: |
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git commit -a -m "Add changes"
+
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.MY_PAT_TOKEN }}
+        branch: ${{ github.ref }}
