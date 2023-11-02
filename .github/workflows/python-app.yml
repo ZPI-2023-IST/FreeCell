@@ -13,8 +13,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+    - uses: actions/checkout@v2
+      with:
+        persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal access token.
+        fetch-depth: 0 # otherwise, there would be errors pushing refs to the destination repository.
 
     - name: Set up Python 3.10
       uses: actions/setup-python@v2
@@ -57,8 +59,9 @@ jobs:
         git add badges/coverage.svg
         git commit -a -m "Add changes"
 
-    - name: Push changes
-      uses: ad-m/github-push-action@master
-      with:
-        github_token: ${{ secrets.MY_PAT_TOKEN }}
-        branch: ${{ github.ref }}
+    #  i want to push my changes to current branch
+    -name: Push code
+      - uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.MY_PAT_TOKEN }}
+          branch: ${{ github.ref }}
