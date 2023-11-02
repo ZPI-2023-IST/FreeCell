@@ -7,9 +7,6 @@ on:
   pull_request:
     branches:
       - main
-#env:
-#  GITHUB_TOKEN: ${{ secrets.MY_PAT_TOKEN }}
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -56,15 +53,10 @@ jobs:
         coverage-badge -o coverage.svg
         mv coverage.svg badges/
 
-    - name: Commit files
+    - name: Commit and push changes
       run: |
-        git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git config --local user.email "github@Actions.com"
         git config --local user.name "github-actions[bot]"
         git add badges/coverage.svg
-        git commit -a -m "Add changes"
-
-    - name: Push changes
-      uses: ad-m/github-push-action@master
-      with:
-        github_token: ${{ secrets.MY_PAT_TOKEN }}
-        branch: ${{ github.ref }}
+        git commit -m "Add coverage badge"
+        git push
