@@ -58,5 +58,5 @@ jobs:
         git config --local user.email "github@Actions.com"
         git config --local user.name "github-actions[bot]"
         git add badges/coverage.svg
-        git commit -m "Add changes"
+        git commit -m "Add coverage badge"
         git push --force origin  HEAD:${{ github.head_ref }}
