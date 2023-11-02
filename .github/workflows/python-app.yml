@@ -51,19 +51,3 @@ jobs:
         pip install coverage-badge
         coverage-badge -o coverage.svg
         mv coverage.svg badges/
-
-    - name: Set Git User
-      run: |
-        git config --global user.email "action@github.com"
-        git config --global user.name "GitHub Action"
-
-    - name: Commit and push coverage badge
-      run: |
-        git checkout $GITHUB_SHA
-        git add badges/coverage.svg
-        git commit -m "Add coverage badge"
-        
-        # Push to the repository using your PAT
-
-        git remote set-url --push origin https://GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY.git $GITHUB_REF
-
