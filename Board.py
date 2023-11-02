@@ -104,7 +104,7 @@ class Board:
             if card_to_move in self.free_cells:
                 return self.__move_card_from_free_cell_to_card(card_to_move, destination_card)
 
-            dest_column =  self.__is_on_top(destination_card)
+            dest_column = self.__is_on_top(destination_card)
             source_column = self.__is_on_top(card_to_move)
 
             if dest_column and source_column:
