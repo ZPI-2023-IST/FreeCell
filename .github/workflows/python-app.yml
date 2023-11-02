@@ -53,14 +53,10 @@ jobs:
         coverage-badge -o coverage.svg
         mv coverage.svg badges/
 
-    - name: Commit files
+    - name: Commit files and push changes
       run: |
         git config --local user.email "github@Actions.com"
         git config --local user.name "github-actions[bot]"
         git add badges/coverage.svg
         git commit -m "Add changes"
-
-    - name: Push changes
-      uses: ZPI-2023-IST/FreeCell/github-push-action@main
-      with:
-        branch: ${{ github.head_ref }}
+        git push
