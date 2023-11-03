@@ -16,6 +16,8 @@ class Card:
         return self.rank == other.rank- 1  and self.color != other.color
 
     def is_larger_and_same_suit(self, other: object) -> bool:
+        if other is None:
+            return self.rank == 1
         return self.rank == other.rank + 1 and self.suit == other.suit
 
     def __le__(self, other):

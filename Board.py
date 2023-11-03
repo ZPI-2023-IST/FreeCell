@@ -37,8 +37,7 @@ class Board:
         if not col:
             return False
 
-        if (self.suit_stack[card.suit] is None and card.rank == 1) or (
-                self.suit_stack[card.suit] is not None and card.is_larger_and_same_suit(self.suit_stack[card.suit])):
+        if card.is_larger_and_same_suit(self.suit_stack[card.suit]):
             self.suit_stack[card.suit] = card
             col.pop()
             return True
