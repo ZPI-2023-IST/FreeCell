@@ -19,6 +19,20 @@ class Board:
 
     def empty_cells(self) -> int:
         return self.free_cells.count(None) + self.columns.count([])
+    
+    def get_movable_cards(self) -> list:
+        """Get all cards from the top of columns and in free cells.
+        
+        :return: A list of all cards that may be moved.
+        """
+        movable_cards = []
+        for card in self.free_cells:
+            if card is not None:
+                movable_cards.append(card)
+        for column in self.columns:
+            if column:
+                movable_cards.append(column[-1])
+        return movable_cards
 
     def move_to_stack(self, card: Card) -> bool:
         col = self.__is_on_top(card)
