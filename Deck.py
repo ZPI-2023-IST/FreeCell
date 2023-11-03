@@ -21,7 +21,7 @@ class Deck:
 
         """
         1. The type of values the generator yields (in this case, int).
-        2.The type of value that can be sent to the generator with generator.send().
+        2. The type of value that can be sent to the generator with generator.send().
             We are not using send, so we can use None here.
         3. The type of value that the generator returns when it's exhausted or a return statement is encountered.
             In out case, we can use None here as well.
