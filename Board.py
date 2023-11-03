@@ -30,6 +30,20 @@ class Board:
             if column:
                 movable_cards.append(column[-1])
         return movable_cards
+    
+    def find_card_from_string(self, card_string: str) -> Card:
+        """Find a card from a string.
+        
+        :param card_string: A string representing a card.
+        :return: A Card object if it is at the top of any column or free cells, else None.
+        """
+        for column in self.columns:
+            if column and str(column[-1]) == card_string:
+                return card
+        for card in self.free_cells:
+            if card and str(card) == card_string:
+                return card
+        return None
 
     def move_to_stack(self, card: Card) -> bool:
         col = self.__is_on_top(card)
