@@ -1,3 +1,10 @@
+from enum import Enum
+
+class State(Enum):
+    ONGOING = 0
+    WON = 1
+    LOST = 2
+
 class Game:
     def get_all_moves(self) -> list:
         pass
@@ -5,7 +12,7 @@ class Game:
     def make_move(self, move: tuple) -> None:
         pass
 
-    def get_state(self) -> list:
+    def get_state(self) -> State:
         pass
 
     def get_board(self) -> list:
