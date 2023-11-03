@@ -21,14 +21,11 @@ class Board:
         return self.free_cells.count(None) + self.columns.count([])
     
     def get_movable_cards(self) -> list:
-        """Get all cards from the top of columns and in free cells.
+        """Get all cards from the top of columns.
         
         :return: A list of all cards that may be moved.
         """
         movable_cards = []
-        for card in self.free_cells:
-            if card is not None:
-                movable_cards.append(card)
         for column in self.columns:
             if column:
                 movable_cards.append(column[-1])
