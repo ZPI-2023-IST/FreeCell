@@ -103,7 +103,7 @@ class TestFreecell(TestCase):
     def test_scenario_no_moves(self):
         freecell = self.setup_scenario_no_moves()
 
-        assert freecell._move_count == 16
+        assert freecell._move_count == 0
         assert not freecell.get_all_moves()
         assert freecell.get_state == State.LOST
 

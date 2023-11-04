@@ -66,7 +66,7 @@ class FreeCell(Game):
 
                 # Check if any card from freecells can be moved onto a column
                 for card_destination in suspected_moves:
-                    if card.is_smaller_and_opposite_color(card_destination):
+                    if card.is_smaller_and_different_color(card_destination):
                         moves.append((str(card), str(card_destination)))
 
         for card in suspected_moves:
@@ -77,7 +77,7 @@ class FreeCell(Game):
             # Check if any card from columns can be moved onto another column
             for card_destination in suspected_moves:
                 if card != card_destination and (
-                        card.is_smaller_and_opposite_color(card_destination)):
+                        card.is_smaller_and_different_color(card_destination)):
                     moves.append((str(card), str(card_destination)))
 
         return moves
