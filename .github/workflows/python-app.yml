@@ -48,7 +48,7 @@ jobs:
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
     - name: Remove existing badges directory (if it exists)
-      run: rm -rf badges
+      run: rm -rf badges/coverage.svg
 
     - name: Generate coverage badge
       run: |
