@@ -2,13 +2,86 @@ from Card import Card
 
 
 class Board:
+    """
+    Represents a FreeCell game board.
+
+    The board consists of columns, free cells, and suit stacks where cards are placed. The goal of the game
+    is to move all cards to the suit stacks while following the rules of the game.
+
+    Args:
+        cards (list): A list of card objects to initialize the game board.
+
+    Attributes:
+        columns (list of list): The columns on the board, represented as lists of cards.
+        free_cells (list of Card or None): The free cells, each holding a card or None.
+        suit_stack (dict): A dictionary representing the suit stacks for hearts (h), diamonds (d), clubs (c), and spades (s).
+
+    Methods:
+        - empty_cells(): Returns the number of empty cells in the columns and free cells.
+        - move_to_stack(card): Attempts to move a card to a suit stack.
+        - move_to_free_cell(card): Attempts to move a card to a free cell.
+        - move_to_free_column(card): Attempts to move a card to an empty column.
+        - move_to_card(card_to_move, destination_card): Attempts to move a card to another card.
+    """
     def __init__(self, cards: list) -> None:
         self.columns = []
         self.free_cells = [None for _ in range(4)]
         self.suit_stack = {'h': None, 'd': None, 'c': None, 's': None}
         self.__make_deck(cards)
 
+    def __is_on_top(self, card: Card) -> list:
+        """
+        Finds the column containing the given card if it is on top.
+
+        Args:
+            card (Card): The card to search for.
+
+        Returns:
+            list: The column that contains the card if it's on top, otherwise an empty list.
+        """
+        col = next((col for col in self.columns if card in col), None)
+
+        if card == col[-1]:
+            return col
+
+        return []
+
+    def __move_card_from_free_cell_to_card(self, card_to_move: Card, destination_card: Card) -> bool:
+        """
+        Moves a card from a free cell to another card.
+
+        Args:
+            card_to_move (Card): The card to be moved.
+            destination_card (Card): The card where the move is attempted.
+
+        Returns:
+            bool: True if the move was successful, False otherwise.
+        """
+        self.columns[next(i for i, col in enumerate(self.columns) if destination_card in col)].append(card_to_move)
+        self.free_cells[self.free_cells.index(card_to_move)] = None
+        return True
+
+    def __move_card_from_free_cell_to_empty_column(self, card_to_move: Card) -> bool:
+        """
+        Moves a card from a free cell to an empty column.
+
+        Args:
+            card_to_move (Card): The card to be moved.
+
+        Returns:
+            bool: True if the move was successful, False otherwise.
+        """
+        self.columns[next(i for i, col in enumerate(self.columns) if not col)].append(card_to_move)
+        self.free_cells[self.free_cells.index(card_to_move)] = None
+        return True
+
     def __make_deck(self, cards: list) -> None:
+        """
+        Initializes the columns with cards from a provided list.
+
+        Args:
+            cards (list): A list of card objects to distribute across the columns.
+        """
         start = 0
         cards_per_column = [6] * 4 + [7] * 4
 
@@ -18,9 +91,24 @@ class Board:
             start += num_cards
 
     def empty_cells(self) -> int:
+        """
+        Returns the number of empty cells in the columns and free cells.
+
+        Returns:
+            int: The number of empty cells.
+        """
         return self.free_cells.count(None) + self.columns.count([])
 
     def move_to_stack(self, card: Card) -> bool:
+        """
+        Attempts to move a card to a suit stack.
+
+        Args:
+            card (Card): The card to be moved.
+
+        Returns:
+            bool: True if the move was successful, False otherwise.
+        """
         col = self.__is_on_top(card)
 
         if not col:
@@ -35,6 +123,15 @@ class Board:
         return False
 
     def move_to_free_cell(self, card: Card) -> bool:
+        """
+        Attempts to move a card to a free cell.
+
+        Args:
+            card (Card): The card to be moved.
+
+        Returns:
+            bool: True if the move was successful, False otherwise.
+        """
 
         col = self.__is_on_top(card)
 
@@ -48,16 +145,17 @@ class Board:
                     col.pop()
                     return True
 
-    def __is_on_top(self, card: Card) -> list:
-        col = next((col for col in self.columns if card in col), None)
-
-        if card == col[-1]:
-            return col
-
-        return []
 
     def move_to_free_column(self, card: Card) -> bool:
+        """
+        Attempts to move a card to an empty column.
 
+        Args:
+            card (Card): The card to be moved.
+
+        Returns:
+            bool: True if the move was successful, False otherwise.
+        """
         # check if there is any free column
         if self.columns.count([]) < 1:
             return False
@@ -84,18 +182,17 @@ class Board:
 
         return False  # Move unsuccessful
 
-    def __move_card_from_free_cell_to_card(self, card_to_move: Card, destination_card: Card) -> bool:
-        self.columns[next(i for i, col in enumerate(self.columns) if destination_card in col)].append(card_to_move)
-        self.free_cells[self.free_cells.index(card_to_move)] = None
-        return True
-
-    def __move_card_from_free_cell_to_empty_column(self, card_to_move: Card) -> bool:
-        self.columns[next(i for i, col in enumerate(self.columns) if not col)].append(card_to_move)
-        self.free_cells[self.free_cells.index(card_to_move)] = None
-        return True
-
     def move_to_card(self, card_to_move: Card, destination_card: Card) -> bool:
+        """
+        Attempts to move a card to another card.
 
+        Args:
+            card_to_move (Card): The card to be moved.
+            destination_card (Card): The card where the move is attempted.
+
+        Returns:
+            bool: True if the move was successful, False otherwise.
+        """
         if card_to_move.is_smaller_and_different_color(destination_card):
 
             # Check if card is in free cell
