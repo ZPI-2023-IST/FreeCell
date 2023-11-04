@@ -48,7 +48,7 @@ jobs:
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
     - name: Remove existing badges file (if it exists)
-      run: rm -rf badges/coverage.svg
+      run: rm -rf badges
 
     - name: Generate coverage badge
       run: |
@@ -63,4 +63,4 @@ jobs:
         git config --local user.name "github-actions[bot]"
         git add badges/coverage.svg
         git commit -m "Add coverage badge"
-
+        git push
