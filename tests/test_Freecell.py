@@ -3,6 +3,7 @@ from Freecell import FreeCell
 from Game import State
 from Card import Card
 
+
 class TestFreecell(TestCase):
 
     def __flatten_list(self, _list: list) -> list:
@@ -10,12 +11,16 @@ class TestFreecell(TestCase):
 
     def setup_scenario_various_moves() -> FreeCell:
         return FreeCell()
-    
+
     def setup_scenario_stack_move() -> FreeCell:
         freecell = FreeCell()
-        freecell.board.columns = [[Card(13, 'h')], [Card(13, 'd')], [Card(13, 's')], [Card(13, 'c')],
-                                   [Card(3, 'h')], [Card(3, 'd')], [Card(3, 's')], [Card(3, 'c')]]
-        freecell.board.free_cells = [Card(10, 'h'), Card(10, 'd'), Card(10, 's'), Card(10, 'c')]
+        freecell.board.columns = [
+            [Card(13, 'h')], [Card(13, 'd')], [Card(13, 's')], [Card(13, 'c')],
+            [Card(3, 'h')], [Card(3, 'd')], [Card(3, 's')], [Card(3, 'c')]
+        ]
+        freecell.board.free_cells = [
+            Card(10, 'h'), Card(10, 'd'), Card(10, 's'), Card(10, 'c')
+        ]
         freecell.board.suit_stack = {
             'h': Card(1, 'h'),
             'd': Card(1, 'd'),
@@ -23,12 +28,16 @@ class TestFreecell(TestCase):
             'c': Card(2, 'c')
         }
         return freecell
-    
+
     def setup_scenario_free_column() -> FreeCell:
         freecell = FreeCell()
-        freecell.board.columns = [[], [Card(13, 'd')], [Card(13, 's')], [Card(13, 'c')],
-                                   [Card(3, 'h')], [Card(3, 'd')], [Card(3, 's')], [Card(3, 'c')]]
-        freecell.board.free_cells = [Card(10, 'h'), Card(10, 'd'), Card(10, 's'), Card(10, 'c')]
+        freecell.board.columns = [
+            [], [Card(13, 'd')], [Card(13, 's')], [Card(13, 'c')],
+            [Card(3, 'h')], [Card(3, 'd')], [Card(3, 's')], [Card(3, 'c')]
+        ]
+        freecell.board.free_cells = [
+            Card(10, 'h'), Card(10, 'd'), Card(10, 's'), Card(10, 'c')
+        ]
         freecell.board.suit_stack = {
             'h': Card(1, 'h'),
             'd': Card(1, 'd'),
@@ -37,7 +46,6 @@ class TestFreecell(TestCase):
         }
         return freecell
 
-    
     def setup_scenario_empty_board() -> FreeCell:
         freecell = FreeCell()
         freecell.board.columns = [[], [], [], [], [], [], [], []]
@@ -52,9 +60,13 @@ class TestFreecell(TestCase):
 
     def setup_scenario_no_moves() -> FreeCell:
         freecell = FreeCell()
-        freecell.board.columns = [[Card(13, 'h')], [Card(13, 'd')], [Card(13, 's')], [Card(13, 'c')],
-                                   [Card(3, 'h')], [Card(3, 'd')], [Card(3, 's')], [Card(3, 'c')]]
-        freecell.board.free_cells = [Card(10, 'h'), Card(10, 'd'), Card(10, 's'), Card(10, 'c')]
+        freecell.board.columns = [
+            [Card(13, 'h')], [Card(13, 'd')], [Card(13, 's')], [Card(13, 'c')],
+            [Card(3, 'h')], [Card(3, 'd')], [Card(3, 's')], [Card(3, 'c')]
+        ]
+        freecell.board.free_cells = [
+            Card(10, 'h'), Card(10, 'd'), Card(10, 's'), Card(10, 'c')
+        ]
         freecell.board.suit_stack = {
             'h': Card(1, 'h'),
             'd': Card(1, 'd'),
@@ -65,7 +77,7 @@ class TestFreecell(TestCase):
 
     def test_scenario_in_progress(self):
         freecell = self.setup_scenario_various_moves()
-        
+
         flattened_list = self.__flatten_list(freecell.get_board())
         assert len(flattened_list) == 60
         assert freecell._move_count == 0

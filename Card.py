@@ -13,7 +13,7 @@ class Card:
         }
 
     def is_smaller_and_different_color(self, other: object) -> bool:
-        return self.rank == other.rank- 1  and self.color != other.color
+        return self.rank == other.rank - 1  and self.color != other.color
 
     def is_larger_and_same_suit(self, other: object) -> bool:
         if other is None:
