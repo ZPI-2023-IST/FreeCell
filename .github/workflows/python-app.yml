@@ -47,6 +47,9 @@ jobs:
       env:
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
+    - name: Remove existing badges directory (if it exists)
+      run: rm -rf badges
+
     - name: Generate coverage badge
       run: |
         pip install coverage-badge
