@@ -52,5 +52,5 @@ class TestCard(TestCase):
         card1 = Card(6, 'd')
         card2 = Card(10, 'h')
 
-        self.assertEqual(str(card1), '6 + d')
-        self.assertEqual(str(card2), 'T + h')
+        self.assertEqual(str(card1), '6d')
+        self.assertEqual(str(card2), 'Th')
