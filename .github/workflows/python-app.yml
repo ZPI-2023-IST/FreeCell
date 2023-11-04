@@ -7,14 +7,15 @@ on:
   pull_request:
     branches:
       - main
-env:
-  GITHUB_TOKEN: ${{ secrets.MY_PAT_TOKEN }}
-
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
+    - uses: actions/checkout@v3
+      with:
+        ref: ${{ github.head_ref }}
+        fetch-depth: 0
     - name: Checkout code
       uses: actions/checkout@v2
 
@@ -46,8 +47,21 @@ jobs:
       env:
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
+    - name: Remove existing badges file (if it exists)
+      run: rm -rf badges
+
     - name: Generate coverage badge
       run: |
         pip install coverage-badge
         coverage-badge -o coverage.svg
+        mkdir badges
         mv coverage.svg badges/
+
+    - name: Commit files and push changes
+      run: |
+        git config --local user.email "github@Actions.com"
+        git config --local user.name "github-actions[bot]"
+        git add badges/coverage.svg
+        git commit -m "Add coverage badge"
+        git push --force origin HEAD:${{ github.head_ref }}
+      continue-on-error: true
