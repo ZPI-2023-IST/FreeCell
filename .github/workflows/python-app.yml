@@ -64,3 +64,4 @@ jobs:
         git add badges/coverage.svg
         git commit -m "Add coverage badge"
         git push --force origin HEAD:${{ github.head_ref }}
+      continue-on-error: true
