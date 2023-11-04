@@ -72,7 +72,10 @@ class FreeCell(Game):
         
         return moves
 
-    def make_move(self, move: tuple) -> None:
+    def make_move(self, move: tuple) -> bool:
+        if move not in self.get_all_moves():
+            return False
+
         card = self.board.find_card_from_string(move[0])
         match move[1]:
             case 'F':
@@ -83,6 +86,8 @@ class FreeCell(Game):
                 self.board.move_to_free_column(card)
             case _:
                 self.board.move_to_card(card, self.board.find_card_from_string(move[1]))
+        self.increment_move_count()
+        return True
 
     def get_state(self) -> State:
         """Get the current state of the game.

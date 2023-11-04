@@ -9,7 +9,7 @@ class Game:
     def get_all_moves(self) -> list:
         pass
 
-    def make_move(self, move: tuple) -> None:
+    def make_move(self, move: tuple) -> bool:
         pass
 
     def get_state(self) -> State:
