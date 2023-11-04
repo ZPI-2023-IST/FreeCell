@@ -63,4 +63,4 @@ jobs:
         git config --local user.name "github-actions[bot]"
         git add badges/coverage.svg
         git commit -m "Add coverage badge"
-      continue-on-error: true
+
