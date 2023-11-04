@@ -20,7 +20,7 @@ class Deck:
 
     Private Methods:
         _random_generator(self, seed: int) -> Generator[int, None, None]:
-            A random number generator generator.
+            A random number generator.
 
     Special Methods:
         __repr__(self) -> str:
