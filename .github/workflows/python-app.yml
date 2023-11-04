@@ -47,10 +47,14 @@ jobs:
       env:
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
+    - name: Remove existing badges file (if it exists)
+      run: rm -rf badges
+
     - name: Generate coverage badge
       run: |
         pip install coverage-badge
         coverage-badge -o coverage.svg
+        mkdir badges
         mv coverage.svg badges/
 
     - name: Commit files and push changes
@@ -59,4 +63,4 @@ jobs:
         git config --local user.name "github-actions[bot]"
         git add badges/coverage.svg
         git commit -m "Add coverage badge"
-        git push --force origin  HEAD:${{ github.head_ref }}
+        git push --force origin HEAD:${{ github.head_ref }}
