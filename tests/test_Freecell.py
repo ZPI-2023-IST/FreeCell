@@ -32,7 +32,7 @@ class TestFreecell(TestCase):
     def setup_scenario_free_column(self) -> FreeCell:
         freecell = FreeCell()
         freecell.board.columns = [
-            [], [Card(13, 'd'), Card(12, 'c')], [Card(13, 's')], [Card(13, 'c')],
+            [], [Card(13, 'd'), Card(7, 'c')], [Card(13, 's')], [Card(13, 'c')],
             [Card(3, 'h')], [Card(3, 'd')], [Card(3, 's')], [Card(3, 'c')]
         ]
         freecell.board.free_cells = [
@@ -115,8 +115,7 @@ class TestFreecell(TestCase):
         assert freecell._move_count == 0
         assert freecell.get_state() == State.ONGOING
 
-        print(freecell.get_all_moves())
-        assert freecell.make_move(('Qc', '0'))
+        assert freecell.make_move(('7c', '0'))
         assert freecell._move_count == 1
         assert freecell.get_state() == State.LOST
 
