@@ -7,7 +7,6 @@ from Card import Card
 class TestFreecell(TestCase):
 
     def __flatten_list(self, _list: list) -> list:
-        print(_list)
         return [elem for sublist in _list for elem in sublist]
 
     def setup_scenario_various_moves(self) -> FreeCell:
