@@ -86,7 +86,7 @@ class TestFreecell(TestCase):
 
         for _ in range(4):
             assert freecell.get_state() == State.ONGOING
-            assert freecell.make_move(str(col1[-1]), 'F')
+            assert freecell.make_move((str(col1[-1]), 'F'))
 
         assert freecell._move_count == 4
 
@@ -118,6 +118,7 @@ class TestFreecell(TestCase):
         assert freecell.make_move(moves[0])
         assert freecell._move_count == 1
         print(freecell.get_all_moves())
+        print(freecell.get_board())
         assert freecell.get_state() == State.LOST
 
         assert not freecell.make_move('13h', '0')
@@ -133,6 +134,7 @@ class TestFreecell(TestCase):
         assert freecell.make_move(moves[0])
         assert freecell._move_count == 1
         print(freecell.get_all_moves())
+        print(freecell.get_board())
         assert freecell.get_state() == State.LOST
 
         assert not freecell.make_move('13h', 'S')
