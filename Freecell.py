@@ -121,5 +121,5 @@ class FreeCell(Game):
             * The last 4 element long list is
               the list of the top cards on each suit stack.
         """
-        return self.board.columns + self.board.free_cells + list(
-            self.board.suit_stack.values())
+        return self.board.columns + [self.board.free_cells] + [list(
+            self.board.suit_stack.values())]

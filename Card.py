@@ -83,12 +83,12 @@ class Card:
 
         return self.rank == other.rank and self.suit == other.suit
 
-    def __repr__(self):
+    def __str__(self):
         if self.rank in self.rank_to_value:
             return f'{self.rank_to_value[self.rank]} of {self.suit}'
         return f'{self.rank} of {self.suit}'
 
-    def __str__(self) -> str:
+    def __repr__(self) -> str:
         if self.rank in self.rank_to_value:
             return f'{self.rank_to_value[self.rank]}{self.suit}'
         else:
