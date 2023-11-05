@@ -52,7 +52,7 @@ class FreeCell(Game):
         suspected_moves = self.board.get_movable_cards()
 
         # Check if at least one of freecells is empty
-        if None not in self.board.free_cells:
+        if None in self.board.free_cells:
             # Append moving every from the top of column to a freecell
             for card in suspected_moves:
                 moves.append((str(card), 'F'))
