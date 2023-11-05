@@ -39,7 +39,7 @@ class Board:
         Returns:
             list: The column that contains the card if it's on top, otherwise an empty list.
         """
-        col = next((col for col in self.columns if card == col[-1]), [])
+        col = next((col for col in self.columns if col and card == col[-1]), [])
 
         return col
 
