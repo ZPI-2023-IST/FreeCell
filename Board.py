@@ -39,12 +39,9 @@ class Board:
         Returns:
             list: The column that contains the card if it's on top, otherwise an empty list.
         """
-        col = next((col for col in self.columns if card in col), None)
+        col = next((col for col in self.columns if card == col[-1]), [])
 
-        if card == col[-1]:
-            return col
-
-        return []
+        return col
 
     def __move_card_from_free_cell_to_card(self, card_to_move: Card, destination_card: Card) -> bool:
         """
