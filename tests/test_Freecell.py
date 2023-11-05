@@ -116,11 +116,11 @@ class TestFreecell(TestCase):
         assert freecell.get_state() == State.ONGOING
 
         print(freecell.get_all_moves())
-        assert freecell.make_move(('12c', '0'))
+        assert freecell.make_move(('Qc', '0'))
         assert freecell._move_count == 1
         assert freecell.get_state() == State.LOST
 
-        assert not freecell.make_move(('13h', '0'))
+        assert not freecell.make_move(('Kh', '0'))
 
     def test_scenario_stack_move(self):
         freecell = self.setup_scenario_stack_move()
@@ -134,4 +134,4 @@ class TestFreecell(TestCase):
         assert freecell._move_count == 1
         assert freecell.get_state() == State.LOST
 
-        assert not freecell.make_move(('13h', 'S'))
+        assert not freecell.make_move(('Kh', 'S'))
