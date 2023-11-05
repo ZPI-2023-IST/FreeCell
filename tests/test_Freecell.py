@@ -86,7 +86,7 @@ class TestFreecell(TestCase):
         col1 = freecell.board.columns[0]
 
         for _ in range(4):
-            assert freecell.get_state == State.ONGOING
+            assert freecell.get_state() == State.ONGOING
             assert freecell.make_move(str(col1[-1]), 'F')
 
         assert freecell._move_count == 4
@@ -99,14 +99,14 @@ class TestFreecell(TestCase):
 
         assert freecell._move_count == 0
         assert not freecell.get_all_moves()
-        assert freecell.get_state == State.WON
+        assert freecell.get_state() == State.WON
 
     def test_scenario_no_moves(self):
         freecell = self.setup_scenario_no_moves()
 
         assert freecell._move_count == 0
         assert not freecell.get_all_moves()
-        assert freecell.get_state == State.LOST
+        assert freecell.get_state() == State.LOST
 
     def test_scenario_free_column(self):
         freecell = self.setup_scenario_free_column()
@@ -114,11 +114,11 @@ class TestFreecell(TestCase):
 
         assert len(moves) == 11
         assert freecell._move_count == 0
-        assert freecell.get_state == State.ONGOING
+        assert freecell.get_state() == State.ONGOING
 
         assert freecell.make_move(moves[0])
         assert freecell._move_count == 1
-        assert freecell.get_state == State.LOST
+        assert freecell.get_state() == State.LOST
 
         assert not freecell.make_move('13h', '0')
 
@@ -128,10 +128,10 @@ class TestFreecell(TestCase):
 
         assert len(moves) == 1
         assert freecell._move_count == 0
-        assert freecell.get_state == State.ONGOING
+        assert freecell.get_state() == State.ONGOING
 
         assert freecell.make_move(moves[0])
         assert freecell._move_count == 1
-        assert freecell.get_state == State.LOST
+        assert freecell.get_state() == State.LOST
 
         assert not freecell.make_move('13h', 'S')
