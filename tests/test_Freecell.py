@@ -115,6 +115,7 @@ class TestFreecell(TestCase):
         assert freecell._move_count == 0
         assert freecell.get_state() == State.ONGOING
 
+        print(freecell.get_all_moves())
         assert freecell.make_move(('12c', '0'))
         assert freecell._move_count == 1
         assert freecell.get_state() == State.LOST

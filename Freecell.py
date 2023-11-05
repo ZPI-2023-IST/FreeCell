@@ -93,6 +93,7 @@ class FreeCell(Game):
             case 'S':
                 self.board.move_to_stack(card)
             case '0':
+                print('in')
                 self.board.move_to_free_column(card)
             case _:
                 self.board.move_to_card(
