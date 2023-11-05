@@ -39,12 +39,9 @@ class Board:
         Returns:
             list: The column that contains the card if it's on top, otherwise an empty list.
         """
-        col = next((col for col in self.columns if card in col), None)
+        col = next((col for col in self.columns if col and card == col[-1]), [])
 
-        if card == col[-1]:
-            return col
-
-        return []
+        return col
 
     def __move_card_from_free_cell_to_card(self, card_to_move: Card, destination_card: Card) -> bool:
         """
@@ -99,6 +96,32 @@ class Board:
         """
         return self.free_cells.count(None) + self.columns.count([])
 
+    def get_movable_cards(self) -> list:
+        """Get all cards from the top of columns.
+
+        :return: A list of all cards that may be moved.
+        """
+        movable_cards = []
+        for column in self.columns:
+            if column:
+                movable_cards.append(column[-1])
+        return movable_cards
+
+    def find_card_from_string(self, card_string: str) -> Card:
+        """Find a card from a string.
+
+        :param card_string: A string representing a card.
+        :return: A Card object if it is at the top of any column
+        or free cells, else None.
+        """
+        for column in self.columns:
+            if column and str(column[-1]) == card_string:
+                return column[-1]
+        for card in self.free_cells:
+            if card and str(card) == card_string:
+                return card
+        return None
+
     def move_to_stack(self, card: Card) -> bool:
         """
         Attempts to move a card to a suit stack.
@@ -114,8 +137,7 @@ class Board:
         if not col:
             return False
 
-        if (self.suit_stack[card.suit] is None and card.rank == 1) or (
-                self.suit_stack[card.suit] is not None and card.is_larger_and_same_suit(self.suit_stack[card.suit])):
+        if card.is_larger_and_same_suit(self.suit_stack[card.suit]):
             self.suit_stack[card.suit] = card
             col.pop()
             return True
@@ -163,7 +185,8 @@ class Board:
         if card in self.free_cells:
             return self.__move_card_from_free_cell_to_empty_column(card)
 
-        source_column = next((col for col in self.columns if card in col), None)
+        source_column = next(
+            (col for col in self.columns if card in col), None)
         if source_column:
             cards_to_move = source_column[source_column.index(card):]
 
@@ -173,14 +196,35 @@ class Board:
             )
 
             if len(cards_to_move) <= self.empty_cells() and valid_sequence:
-                self.columns[next(i for i, col in enumerate(self.columns) if not col)].extend(cards_to_move)
+                self.columns[next(
+                    i for i, col in enumerate(self.columns) if not col
+                    )].extend(cards_to_move)
 
                 index_of_card_to_move = source_column.index(card)
-                source_column[index_of_card_to_move:] = source_column[:index_of_card_to_move]
+                source_column[index_of_card_to_move:] = \
+                    source_column[:index_of_card_to_move]
 
                 return True  # Move successful
 
         return False  # Move unsuccessful
+
+    def __move_card_from_free_cell_to_card(self,
+                card_to_move: Card, destination_card: Card) -> bool:
+
+        self.columns[next(
+            i for i, col in enumerate(self.columns) if destination_card in col
+            )
+        ].append(card_to_move)
+
+        self.free_cells[self.free_cells.index(card_to_move)] = None
+        return True
+
+    def __move_card_from_free_cell_to_empty_column(
+            self, card_to_move: Card) -> bool:
+
+        self.columns[next(i for i, col in enumerate(self.columns) if not col)].append(card_to_move)
+        self.free_cells[self.free_cells.index(card_to_move)] = None
+        return True
 
     def move_to_card(self, card_to_move: Card, destination_card: Card) -> bool:
         """

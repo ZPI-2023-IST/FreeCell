@@ -47,8 +47,7 @@ class Card:
         }
 
     def is_smaller_and_different_color(self, other: object) -> bool:
-        """
-        Checks if the card is one rank smaller and of a different color than another card.
+        """Checks if the card is one rank smaller and of a different color than another card.
 
         Args:
             other (object): Another card to compare to.
@@ -56,9 +55,10 @@ class Card:
         Returns:
             bool: True if the conditions are met, False otherwise.
         """
-        return self.rank == other.rank- 1  and self.color != other.color
+        
+        return self.rank == other.rank - 1  and self.color != other.color
 
-    def is_larger_and_same_suit(self, other: object) -> bool:
+    def is_larger_and_same_suit(self, other: object) -> bool:        
         """
         Checks if the card is one rank larger and of the same suit as another card.
 
@@ -68,6 +68,9 @@ class Card:
         Returns:
             bool: True if the conditions are met, False otherwise.
         """
+        
+        if other is None:
+            return self.rank == 1
         return self.rank == other.rank + 1 and self.suit == other.suit
 
     def __le__(self, other):
@@ -87,6 +90,6 @@ class Card:
 
     def __str__(self) -> str:
         if self.rank in self.rank_to_value:
-            return f'{self.rank_to_value[self.rank]} + {self.suit}'
+            return f'{self.rank_to_value[self.rank]}{self.suit}'
         else:
-            return f'{self.rank} + {self.suit}'
+            return f'{self.rank}{self.suit}'
