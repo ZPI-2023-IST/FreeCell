@@ -117,6 +117,7 @@ class TestFreecell(TestCase):
 
         assert freecell.make_move(moves[0])
         assert freecell._move_count == 1
+        print(freecell.get_all_moves())
         assert freecell.get_state() == State.LOST
 
         assert not freecell.make_move('13h', '0')
@@ -131,6 +132,7 @@ class TestFreecell(TestCase):
 
         assert freecell.make_move(moves[0])
         assert freecell._move_count == 1
+        print(freecell.get_all_moves())
         assert freecell.get_state() == State.LOST
 
         assert not freecell.make_move('13h', 'S')

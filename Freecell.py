@@ -107,7 +107,7 @@ class FreeCell(Game):
         """
         suit_stack = list(self.board.suit_stack.values())
         for card in suit_stack:
-            if card.rank != 13:
+            if card is None or card.rank != 13:
                 return State.ONGOING if bool(
                     self.get_all_moves()) else State.LOST
         return State.WON
