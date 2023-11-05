@@ -118,10 +118,10 @@ class Board:
         or free cells, else None.
         """
         for column in self.columns:
-            if column and str(column[-1]) == card_string:
+            if column and repr(column[-1]) == card_string:
                 return column[-1]
         for card in self.free_cells:
-            if card and str(card) == card_string:
+            if card and repr(card) == card_string:
                 return card
         return None
 
