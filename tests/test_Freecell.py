@@ -7,6 +7,7 @@ from Card import Card
 class TestFreecell(TestCase):
 
     def __flatten_list(self, _list: list) -> list:
+        print(_list)
         return [elem for sublist in _list for elem in sublist]
 
     def setup_scenario_various_moves(self) -> FreeCell:
@@ -85,7 +86,7 @@ class TestFreecell(TestCase):
         col1 = freecell.board.columns[0]
 
         for _ in range(4):
-            assert freecell.get_state == State.IN_PROGRESS
+            assert freecell.get_state == State.ONGOING
             assert freecell.make_move(str(col1[-1]), 'F')
 
         assert freecell._move_count == 4
@@ -113,7 +114,7 @@ class TestFreecell(TestCase):
 
         assert len(moves) == 11
         assert freecell._move_count == 0
-        assert freecell.get_state == State.IN_PROGRESS
+        assert freecell.get_state == State.ONGOING
 
         assert freecell.make_move(moves[0])
         assert freecell._move_count == 1
@@ -127,7 +128,7 @@ class TestFreecell(TestCase):
 
         assert len(moves) == 1
         assert freecell._move_count == 0
-        assert freecell.get_state == State.IN_PROGRESS
+        assert freecell.get_state == State.ONGOING
 
         assert freecell.make_move(moves[0])
         assert freecell._move_count == 1
