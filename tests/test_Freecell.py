@@ -16,7 +16,7 @@ class TestFreecell(TestCase):
         freecell = FreeCell()
         freecell.board.columns = [
             [Card(13, 'h')], [Card(13, 'd')], [Card(13, 's')], [Card(13, 'c')],
-            [Card(3, 'h')], [Card(3, 'd')], [Card(3, 's')], [Card(3, 'c')]
+            [Card(4, 'h')], [Card(4, 'd'), Card(2, 'c')], [Card(4, 's')], [Card(4, 'c')]
         ]
         freecell.board.free_cells = [
             Card(10, 'h'), Card(10, 'd'), Card(10, 's'), Card(10, 'c')
@@ -25,14 +25,14 @@ class TestFreecell(TestCase):
             'h': Card(1, 'h'),
             'd': Card(1, 'd'),
             's': Card(1, 's'),
-            'c': Card(2, 'c')
+            'c': Card(1, 'c')
         }
         return freecell
 
     def setup_scenario_free_column(self) -> FreeCell:
         freecell = FreeCell()
         freecell.board.columns = [
-            [], [Card(13, 'd')], [Card(13, 's')], [Card(13, 'c')],
+            [], [Card(13, 'd'), Card(12, 'c')], [Card(13, 's')], [Card(13, 'c')],
             [Card(3, 'h')], [Card(3, 'd')], [Card(3, 's')], [Card(3, 'c')]
         ]
         freecell.board.free_cells = [
@@ -115,10 +115,8 @@ class TestFreecell(TestCase):
         assert freecell._move_count == 0
         assert freecell.get_state() == State.ONGOING
 
-        assert freecell.make_move(moves[0])
+        assert freecell.make_move(('12c', '0'))
         assert freecell._move_count == 1
-        print(freecell.get_all_moves())
-        print(freecell.get_board())
         assert freecell.get_state() == State.LOST
 
         assert not freecell.make_move('13h', '0')
@@ -131,10 +129,8 @@ class TestFreecell(TestCase):
         assert freecell._move_count == 0
         assert freecell.get_state() == State.ONGOING
 
-        assert freecell.make_move(moves[0])
+        assert freecell.make_move(('2c', 'S'))
         assert freecell._move_count == 1
-        print(freecell.get_all_moves())
-        print(freecell.get_board())
         assert freecell.get_state() == State.LOST
 
         assert not freecell.make_move('13h', 'S')
