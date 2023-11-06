@@ -1,6 +1,7 @@
 from Game import Game, State
 from Board import Board
 from Deck import Deck
+from Move import Move
 
 
 class FreeCell(Game):
