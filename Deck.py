@@ -28,18 +28,19 @@ class Deck:
         __str__(self) -> str:
             Returns a string representation of the deck.
     """
+
     def __init__(self, seed: int = 1) -> None:
         self.seed = seed
         self.cards = list()
-        for suit in ['h', 'd', 'c', 's']:
+        for suit in ["h", "d", "c", "s"]:
             for rank in list(range(1, 14)):
                 self.cards.append(Card(rank, suit))
 
     def __repr__(self) -> str:
-        return f'{self.cards}'
+        return f"{self.cards}"
 
     def __str__(self) -> str:
-        return f'{self.cards}'
+        return f"{self.cards}"
 
     def _random_generator(self, seed: int) -> Generator[int, None, None]:
         """
