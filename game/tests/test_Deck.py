@@ -1,5 +1,5 @@
 import unittest
-from Deck import Deck
+from game.Deck import Deck
 
 
 class TestDeck(unittest.TestCase):

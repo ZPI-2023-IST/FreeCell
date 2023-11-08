@@ -1,7 +1,7 @@
 from unittest import TestCase
-from Board import Board
-from unittest.mock import Mock, patch
-from Card import Card
+from game.Board import Board
+from unittest.mock import Mock
+from game.Card import Card
 
 
 class TestBoard(TestCase):

@@ -13,7 +13,7 @@ class FreeCell(Game):
     def increment_move_count(self):
         self._move_count += 1
 
-    # Overridden functions from Game class
+    # Overridden functions from game class
 
     def get_all_moves(self) -> list:
         """Get all possible moves from the current board state.
