@@ -18,6 +18,8 @@ jobs:
         fetch-depth: 0
     - name: Checkout code
       uses: actions/checkout@v2
+      with:
+        ref: ${{ github.head_ref }}
 
     - name: Set up Python 3.10
       uses: actions/setup-python@v2
@@ -43,7 +45,7 @@ jobs:
         git config --local user.email "github@Actions.com"
         git config --local user.name "github-actions[bot]"
         git commit -am "Format code with Black"
-        git push
+        git push origin HEAD:${{ github.head_ref }}
 
     - name: Lint with Flake8
       run: |
