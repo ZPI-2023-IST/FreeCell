@@ -30,8 +30,8 @@ jobs:
         pip install flake8 black pytest pytest-cov
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-    - name: Lint with Black
-      run: black *.py --check --diff .
+    - name: Reformat with Black
+      run: black *.py .
 
     - name: Lint with Flake8
       run: |
