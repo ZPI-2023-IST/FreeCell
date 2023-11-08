@@ -4,9 +4,9 @@ from Deck import Deck
 
 
 class FreeCell(Game):
-    def __init__(self):
+    def __init__(self, seed=1):
         self._move_count = 0
-        self.deck = Deck()
+        self.deck = Deck(seed)
         self.board = Board(self.deck.cards_shuffled())
 
     def increment_move_count(self):
