@@ -47,7 +47,7 @@ class FreeCell(Game):
         if [] in self.board.columns:
             for card in self.board.free_cells + self.board.get_movable_cards():
                 if card:
-                    moves.append((str(card), '0'))
+                    moves.append((str(card), "0"))
 
         # Get cards from the top of columns
         suspected_moves = self.board.get_movable_cards()
@@ -56,14 +56,13 @@ class FreeCell(Game):
         if None in self.board.free_cells:
             # Append moving every from the top of column to a freecell
             for card in suspected_moves:
-                moves.append((str(card), 'F'))
+                moves.append((str(card), "F"))
 
         for card in self.board.free_cells:
             if card:
                 # Check for suit stack moves
-                if card.is_larger_and_same_suit(
-                        self.board.suit_stack[card.suit]):
-                    moves.append((str(card), 'S'))
+                if card.is_larger_and_same_suit(self.board.suit_stack[card.suit]):
+                    moves.append((str(card), "S"))
 
                 # Check if any card from freecells can be moved onto a column
                 for card_destination in suspected_moves:
@@ -73,12 +72,13 @@ class FreeCell(Game):
         for card in suspected_moves:
             # Check if any card from columns can be moved onto a suit stack
             if card.is_larger_and_same_suit(self.board.suit_stack[card.suit]):
-                moves.append((str(card), 'S'))
+                moves.append((str(card), "S"))
 
             # Check if any card from columns can be moved onto another column
             for card_destination in suspected_moves:
                 if card != card_destination and (
-                        card.is_smaller_and_different_color(card_destination)):
+                    card.is_smaller_and_different_color(card_destination)
+                ):
                     moves.append((str(card), str(card_destination)))
 
         return moves
@@ -96,8 +96,7 @@ class FreeCell(Game):
             case Move.EMPTY_COLUMN.value:
                 self.board.move_to_free_column(card)
             case _:
-                self.board.move_to_card(
-                    card, self.board.find_card_from_string(move[1]))
+                self.board.move_to_card(card, self.board.find_card_from_string(move[1]))
         self.increment_move_count()
         return True
 
@@ -109,8 +108,7 @@ class FreeCell(Game):
         suit_stack = list(self.board.suit_stack.values())
         for card in suit_stack:
             if card is None or card.rank != 13:
-                return State.ONGOING if bool(
-                    self.get_all_moves()) else State.LOST
+                return State.ONGOING if bool(self.get_all_moves()) else State.LOST
         return State.WON
 
     def get_board(self) -> list:
@@ -122,5 +120,8 @@ class FreeCell(Game):
             * The last 4 element long list is
               the list of the top cards on each suit stack.
         """
-        return self.board.columns + [self.board.free_cells] + [list(
-            self.board.suit_stack.values())]
+        return (
+            self.board.columns
+            + [self.board.free_cells]
+            + [list(self.board.suit_stack.values())]
+        )

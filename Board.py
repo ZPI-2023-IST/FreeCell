@@ -23,10 +23,11 @@ class Board:
         - move_to_free_column(card): Attempts to move a card to an empty column.
         - move_to_card(card_to_move, destination_card): Attempts to move a card to another card.
     """
+
     def __init__(self, cards: list) -> None:
         self.columns = []
         self.free_cells = [None for _ in range(4)]
-        self.suit_stack = {'h': None, 'd': None, 'c': None, 's': None}
+        self.suit_stack = {"h": None, "d": None, "c": None, "s": None}
         self.__make_deck(cards)
 
     def __is_on_top(self, card: Card) -> list:
@@ -43,7 +44,9 @@ class Board:
 
         return col
 
-    def __move_card_from_free_cell_to_card(self, card_to_move: Card, destination_card: Card) -> bool:
+    def __move_card_from_free_cell_to_card(
+        self, card_to_move: Card, destination_card: Card
+    ) -> bool:
         """
         Moves a card from a free cell to another card.
 
@@ -54,7 +57,9 @@ class Board:
         Returns:
             bool: True if the move was successful, False otherwise.
         """
-        self.columns[next(i for i, col in enumerate(self.columns) if destination_card in col)].append(card_to_move)
+        self.columns[
+            next(i for i, col in enumerate(self.columns) if destination_card in col)
+        ].append(card_to_move)
         self.free_cells[self.free_cells.index(card_to_move)] = None
         return True
 
@@ -68,7 +73,9 @@ class Board:
         Returns:
             bool: True if the move was successful, False otherwise.
         """
-        self.columns[next(i for i, col in enumerate(self.columns) if not col)].append(card_to_move)
+        self.columns[next(i for i, col in enumerate(self.columns) if not col)].append(
+            card_to_move
+        )
         self.free_cells[self.free_cells.index(card_to_move)] = None
         return True
 
@@ -83,7 +90,7 @@ class Board:
         cards_per_column = [6] * 4 + [7] * 4
 
         for num_cards in cards_per_column:
-            column = cards[start:start + num_cards]
+            column = cards[start : start + num_cards]
             self.columns.append(column)
             start += num_cards
 
@@ -167,7 +174,6 @@ class Board:
                     col.pop()
                     return True
 
-
     def move_to_free_column(self, card: Card) -> bool:
         """
         Attempts to move a card to an empty column.
@@ -185,10 +191,9 @@ class Board:
         if card in self.free_cells:
             return self.__move_card_from_free_cell_to_empty_column(card)
 
-        source_column = next(
-            (col for col in self.columns if card in col), None)
+        source_column = next((col for col in self.columns if card in col), None)
         if source_column:
-            cards_to_move = source_column[source_column.index(card):]
+            cards_to_move = source_column[source_column.index(card) :]
 
             valid_sequence = all(
                 card.is_smaller_and_different_color(prev_card)
@@ -196,33 +201,33 @@ class Board:
             )
 
             if len(cards_to_move) <= self.empty_cells() and valid_sequence:
-                self.columns[next(
-                    i for i, col in enumerate(self.columns) if not col
-                    )].extend(cards_to_move)
+                self.columns[
+                    next(i for i, col in enumerate(self.columns) if not col)
+                ].extend(cards_to_move)
 
                 index_of_card_to_move = source_column.index(card)
-                source_column[index_of_card_to_move:] = \
-                    source_column[:index_of_card_to_move]
+                source_column[index_of_card_to_move:] = source_column[
+                    :index_of_card_to_move
+                ]
 
                 return True  # Move successful
 
         return False  # Move unsuccessful
 
-    def __move_card_from_free_cell_to_card(self,
-                card_to_move: Card, destination_card: Card) -> bool:
-
-        self.columns[next(
-            i for i, col in enumerate(self.columns) if destination_card in col
-            )
+    def __move_card_from_free_cell_to_card(
+        self, card_to_move: Card, destination_card: Card
+    ) -> bool:
+        self.columns[
+            next(i for i, col in enumerate(self.columns) if destination_card in col)
         ].append(card_to_move)
 
         self.free_cells[self.free_cells.index(card_to_move)] = None
         return True
 
-    def __move_card_from_free_cell_to_empty_column(
-            self, card_to_move: Card) -> bool:
-
-        self.columns[next(i for i, col in enumerate(self.columns) if not col)].append(card_to_move)
+    def __move_card_from_free_cell_to_empty_column(self, card_to_move: Card) -> bool:
+        self.columns[next(i for i, col in enumerate(self.columns) if not col)].append(
+            card_to_move
+        )
         self.free_cells[self.free_cells.index(card_to_move)] = None
         return True
 
@@ -238,24 +243,27 @@ class Board:
             bool: True if the move was successful, False otherwise.
         """
         if card_to_move.is_smaller_and_different_color(destination_card):
-
             # Check if card is in free cell
             if card_to_move in self.free_cells:
-                return self.__move_card_from_free_cell_to_card(card_to_move, destination_card)
+                return self.__move_card_from_free_cell_to_card(
+                    card_to_move, destination_card
+                )
 
             dest_column = self.__is_on_top(destination_card)
             source_column = self.__is_on_top(card_to_move)
 
             if dest_column and source_column:
                 # Determine the cards to move
-                cards_to_move = source_column[source_column.index(card_to_move):]
+                cards_to_move = source_column[source_column.index(card_to_move) :]
 
                 # Check if there are enough empty cells
                 if len(cards_to_move) <= self.empty_cells():
                     # Move the cards
                     dest_column.extend(cards_to_move)
                     index_of_card_to_move = source_column.index(card_to_move)
-                    source_column[index_of_card_to_move:] = source_column[:index_of_card_to_move]
+                    source_column[index_of_card_to_move:] = source_column[
+                        :index_of_card_to_move
+                    ]
 
                     return True  # Move successful
 

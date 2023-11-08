@@ -1,9 +1,11 @@
 from enum import Enum
 
+
 class State(Enum):
     ONGOING = 0
     WON = 1
     LOST = 2
+
 
 class Game:
     def get_all_moves(self) -> list:
