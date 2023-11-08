@@ -33,6 +33,18 @@ jobs:
     - name: Reformat with Black
       run: black *.py .
 
+    - name: Check for black changes
+      id: diff
+      run: git diff --exit-code || echo ::set-output name=changes::true
+
+    - name: Commit black changes
+      if: steps.diff.outputs.changes == 'true'
+      run: |
+        git config --local user.email "github@Actions.com"
+        git config --local user.name "github-actions[bot]"
+        git commit -am "Format code with Black"
+        git push
+
     - name: Lint with Flake8
       run: |
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
