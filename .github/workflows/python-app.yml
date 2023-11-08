@@ -85,10 +85,9 @@ jobs:
 
     - name: create requirements.txt
       run: |
-        pip freeze > requirements.txt
+        pip3 freeze > requirements.txt
 
     - name: Commit requirements.txt
-      if: steps.diff.outputs.changes == 'true'
       run: |
         git config --local user.email "github@Actions.com"
         git config --local user.name "github-actions[bot]"
