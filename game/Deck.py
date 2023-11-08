@@ -1,6 +1,6 @@
 from typing import Generator
 
-from Card import Card
+from game.Card import Card
 
 
 class Deck:

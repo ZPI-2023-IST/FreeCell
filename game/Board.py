@@ -1,4 +1,4 @@
-from Card import Card
+from game.Card import Card
 
 
 class Board:

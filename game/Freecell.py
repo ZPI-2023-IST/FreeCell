@@ -1,7 +1,7 @@
-from Game import Game, State
-from Board import Board
-from Deck import Deck
-from Move import Move
+from game.Game import Game, State
+from game.Board import Board
+from game.Deck import Deck
+from game.Move import Move
 
 
 class FreeCell(Game):
