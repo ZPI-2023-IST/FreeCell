@@ -92,5 +92,6 @@ jobs:
       run: |
         git config --local user.email "github@Actions.com"
         git config --local user.name "github-actions[bot]"
+        git add requirements.txt
         git commit -am "Export requirements.txt"
         git push origin HEAD:${{ github.head_ref }}
