@@ -89,16 +89,17 @@ class FreeCell(Game):
         card = self.board.find_card_from_string(move[0])
         match move[1]:
             case 'F':
-                self.board.move_to_free_cell(card)
+                move_completed = self.board.move_to_free_cell(card)
             case 'S':
-                self.board.move_to_stack(card)
+                move_completed = self.board.move_to_stack(card)
             case '0':
-                self.board.move_to_free_column(card)
+                move_completed = self.board.move_to_free_column(card)
             case _:
-                self.board.move_to_card(
+                move_completed = self.board.move_to_card(
                     card, self.board.find_card_from_string(move[1]))
-        self.increment_move_count()
-        return True
+        if move_completed:
+            self.increment_move_count()
+        return move_completed
 
     def get_state(self) -> State:
         """Get the current state of the game.
