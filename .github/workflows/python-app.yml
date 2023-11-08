@@ -18,6 +18,8 @@ jobs:
         fetch-depth: 0
     - name: Checkout code
       uses: actions/checkout@v2
+      with:
+        ref: ${{ github.head_ref }}
 
     - name: Set up Python 3.10
       uses: actions/setup-python@v2
@@ -27,8 +29,23 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install flake8 pytest pytest-cov
+        pip install flake8 black pytest pytest-cov
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+    - name: Reformat with Black
+      run: black *.py .
+
+    - name: Check for black changes
+      id: diff
+      run: git diff --exit-code || echo ::set-output name=changes::true
+
+    - name: Commit black changes
+      if: steps.diff.outputs.changes == 'true'
+      run: |
+        git config --local user.email "github@Actions.com"
+        git config --local user.name "github-actions[bot]"
+        git commit -am "Format code with Black"
+        git push origin HEAD:${{ github.head_ref }}
 
     - name: Lint with Flake8
       run: |
