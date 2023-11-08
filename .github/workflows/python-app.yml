@@ -54,7 +54,7 @@ jobs:
 
     - name: Test with pytest and measure coverage
       run: |
-        pytest --cov=. --cov-fail-under=90
+        pytest --cov=game --cov-fail-under=90
         coverage xml
 
     - name: Upload coverage reports to Codecov
