@@ -1,4 +1,5 @@
 import setuptools
+
 setuptools.setup(
     name="freecell",
     version="0.0.1",
