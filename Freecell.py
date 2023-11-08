@@ -1,6 +1,7 @@
 from Game import Game, State
 from Board import Board
 from Deck import Deck
+from Move import Move
 
 
 class FreeCell(Game):
@@ -88,11 +89,11 @@ class FreeCell(Game):
 
         card = self.board.find_card_from_string(move[0])
         match move[1]:
-            case "F":
+            case Move.FREECELL.value:
                 move_completed = self.board.move_to_free_cell(card)
-            case "S":
+            case Move.SUIT_STACK.value:
                 move_completed = self.board.move_to_stack(card)
-            case "0":
+            case Move.EMPTY_COLUMN.value:
                 move_completed = self.board.move_to_free_column(card)
             case _:
                 move_completed = self.board.move_to_card(
