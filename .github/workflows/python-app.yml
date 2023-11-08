@@ -83,6 +83,9 @@ jobs:
         git push --force origin HEAD:${{ github.head_ref }}
       continue-on-error: true
 
+    - name: Remove existing requirements.txt file (if it exists)
+      run: rm -rf requirements.txt
+
     - name: create requirements.txt
       run: |
         pip3 freeze > requirements.txt
