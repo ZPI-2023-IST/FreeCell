@@ -97,3 +97,4 @@ jobs:
         git add requirements.txt
         git commit -am "Export requirements.txt"
         git push origin HEAD:${{ github.head_ref }}
+      continue-on-error: true
