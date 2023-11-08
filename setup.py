@@ -3,7 +3,7 @@ import setuptools
 
 def read_from_requirements():
     with open("requirements.txt") as f:
-        return [filter(f.read().splitlines(), lambda x: not x.startswith("-e"))]
+        return f.read().splitlines()
 
 
 setuptools.setup(
