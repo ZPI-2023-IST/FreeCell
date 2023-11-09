@@ -54,7 +54,7 @@ jobs:
 
     - name: Test with pytest and measure coverage
       run: |
-        pytest --cov=. --cov-fail-under=90
+        pytest --cov=game --cov-fail-under=90
         coverage xml
 
     - name: Upload coverage reports to Codecov
@@ -81,4 +81,20 @@ jobs:
         git add badges/coverage.svg
         git commit -m "Add coverage badge"
         git push --force origin HEAD:${{ github.head_ref }}
+      continue-on-error: true
+
+    - name: Remove existing requirements.txt file (if it exists)
+      run: rm -rf requirements.txt
+
+    - name: create requirements.txt
+      run: |
+        pip3 freeze > requirements.txt
+
+    - name: Commit requirements.txt
+      run: |
+        git config --local user.email "github@Actions.com"
+        git config --local user.name "github-actions[bot]"
+        git add requirements.txt
+        git commit -am "Export requirements.txt"
+        git push origin HEAD:${{ github.head_ref }}
       continue-on-error: true

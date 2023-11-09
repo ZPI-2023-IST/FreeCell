@@ -1,7 +1,7 @@
 from unittest import TestCase
-from Freecell import FreeCell
-from Game import State
-from Card import Card
+from game.Freecell import FreeCell
+from game.Game import State
+from game.Card import Card
 
 
 class TestFreecell(TestCase):
