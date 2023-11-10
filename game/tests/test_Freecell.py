@@ -106,7 +106,9 @@ class TestFreecell(TestCase):
 
         columns, free_cells, suit_stack = freecell.get_board()
 
-        assert len(self.__flatten_list(columns))+ len(free_cells) + len(suit_stack) == 60
+        assert (
+            len(self.__flatten_list(columns)) + len(free_cells) + len(suit_stack) == 60
+        )
         assert freecell._move_count == 0
 
         col1 = freecell.board.columns[0]
