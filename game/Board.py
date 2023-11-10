@@ -254,16 +254,6 @@ class Board:
 
             if dest_column and source_column:
                 dest_column.append(source_column.pop())
-                # # Determine the cards to move
-                # cards_to_move = source_column[source_column.index(card_to_move):]
-
-                # # Check if there are enough empty cells
-                # if len(cards_to_move) <= max(1, self.empty_cells()):
-                #     # Move the cards
-                #     dest_column.extend(cards_to_move)
-                #     index_of_card_to_move = source_column.index(card_to_move)
-                #     source_column[index_of_card_to_move:] = source_column[:index_of_card_to_move]
-
                 return True  # Move successful
 
         return False
