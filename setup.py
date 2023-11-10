@@ -2,7 +2,7 @@ import setuptools
 
 setuptools.setup(
     name="freecell",
-    version="0.0.2",
+    version="0.0.3",
     author="Mateusz and Kamil",
     description="A Freecell game",
     packages=setuptools.find_packages(),
