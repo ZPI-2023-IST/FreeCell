@@ -124,7 +124,7 @@ class FreeCell(Game):
               the list of the top cards on each suit stack.
         """
         return (
-            self.board.columns
-            + [self.board.free_cells]
-            + [list(self.board.suit_stack.values())]
+            self.board.columns,
+            self.board.free_cells,
+            list(self.board.suit_stack.values()),
         )

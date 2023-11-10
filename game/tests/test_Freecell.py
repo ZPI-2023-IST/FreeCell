@@ -104,8 +104,11 @@ class TestFreecell(TestCase):
     def test_scenario_in_progress(self):
         freecell = self.setup_scenario_various_moves()
 
-        flattened_list = self.__flatten_list(freecell.get_board())
-        assert len(flattened_list) == 60
+        columns, free_cells, suit_stack = freecell.get_board()
+
+        assert (
+            len(self.__flatten_list(columns)) + len(free_cells) + len(suit_stack) == 60
+        )
         assert freecell._move_count == 0
 
         col1 = freecell.board.columns[0]
@@ -160,7 +163,7 @@ class TestFreecell(TestCase):
         freecell = self.setup_scenario_empty_board()
 
         flattened_list = self.__flatten_list(freecell.get_board())
-        assert len(flattened_list) == 8
+        assert len(flattened_list) == 16
 
         assert freecell._move_count == 0
         assert not freecell.get_all_moves()
