@@ -15,7 +15,7 @@ class FreeCell(Game):
 
     # Overridden functions from game class
 
-    def get_all_moves(self) -> list:
+    def get_moves(self) -> list:
         """Get all possible moves from the current board state.
 
         :return: A list of all possible moves from the current board state.
@@ -84,7 +84,7 @@ class FreeCell(Game):
         return moves
 
     def make_move(self, move: tuple) -> bool:
-        if move not in self.get_all_moves():
+        if move not in self.get_moves():
             return False
 
         card = self.board.find_card_from_string(move[0])
@@ -111,7 +111,7 @@ class FreeCell(Game):
         suit_stack = list(self.board.suit_stack.values())
         for card in suit_stack:
             if card is None or card.rank != 13:
-                return State.ONGOING if bool(self.get_all_moves()) else State.LOST
+                return State.ONGOING if bool(self.get_moves()) else State.LOST
         return State.WON
 
     def get_board(self) -> list:
