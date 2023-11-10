@@ -8,7 +8,7 @@ class State(Enum):
 
 
 class Game:
-    def get_all_moves(self) -> list:
+    def get_moves(self) -> list:
         pass
 
     def make_move(self, move: tuple) -> bool:

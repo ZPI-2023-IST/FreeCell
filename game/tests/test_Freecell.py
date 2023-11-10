@@ -164,19 +164,19 @@ class TestFreecell(TestCase):
         assert len(flattened_list) == 16
 
         assert freecell._move_count == 0
-        assert not freecell.get_all_moves()
+        assert not freecell.get_moves()
         assert freecell.get_state() == State.WON
 
     def test_scenario_no_moves(self):
         freecell = self.setup_scenario_no_moves()
 
         assert freecell._move_count == 0
-        assert not freecell.get_all_moves()
+        assert not freecell.get_moves()
         assert freecell.get_state() == State.LOST
 
     def test_scenario_free_column(self):
         freecell = self.setup_scenario_free_column()
-        moves = freecell.get_all_moves()
+        moves = freecell.get_moves()
 
         assert len(moves) == 11
         assert freecell._move_count == 0
@@ -190,7 +190,7 @@ class TestFreecell(TestCase):
 
     def test_scenario_stack_move(self):
         freecell = self.setup_scenario_stack_move()
-        moves = freecell.get_all_moves()
+        moves = freecell.get_moves()
 
         assert len(moves) == 1
         assert freecell._move_count == 0
