@@ -73,6 +73,8 @@ class Card:
     def __eq__(self, other):
         if other is None:
             return False
+        if isinstance(other, str):
+            return str(self) == other
 
         return self.rank == other.rank and self.suit == other.suit
 

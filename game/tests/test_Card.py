@@ -57,3 +57,8 @@ class TestCard(TestCase):
 
         self.assertEqual(str(card1), "6d")
         self.assertEqual(str(card2), "Th")
+
+    def test_eq(self):
+        card5s = Card(5, "s")
+        card = "5s"
+        self.assertTrue(card5s == card)
