@@ -6,7 +6,7 @@ from random import Random
 
 
 class FreeCell(Game):
-    def __init__(self, seed:int=None):
+    def __init__(self, seed: int = None):
         if seed is None:
             seed = Random().randint(0, 1000000)
         self._move_count = 0
@@ -134,6 +134,6 @@ class FreeCell(Game):
             self.board.free_cells,
             list(self.board.suit_stack.values()),
         )
-    
+
     def start_game(self) -> None:
         self.__init__()
