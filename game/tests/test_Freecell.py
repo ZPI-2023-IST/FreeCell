@@ -135,7 +135,7 @@ class TestFreecell(TestCase):
         assert freecell.make_move(("5h", "6s"))
         assert freecell.make_move(("9s", "Td"))
         assert freecell.make_move(("4c", "5h"))
-        
+
         with self.assertRaises(ValueError):
             freecell.make_move(("Kc", "S"))
         assert freecell.get_state() == State.ONGOING
@@ -151,7 +151,7 @@ class TestFreecell(TestCase):
         assert freecell.make_move(("7s", "F"))
         assert freecell.make_move(("8d", "9s"))
         assert freecell.make_move(("7s", "8d"))
-        
+
         with self.assertRaises(ValueError):
             freecell.make_move(("9s", "Td"))
         assert freecell.make_move(("5c", "F"))
@@ -196,7 +196,6 @@ class TestFreecell(TestCase):
         assert freecell._move_count == 1
         assert freecell.get_state() == State.LOST
 
-        
         with self.assertRaises(ValueError):
             freecell.make_move(("Kh", "0"))
 
@@ -212,6 +211,5 @@ class TestFreecell(TestCase):
         assert freecell._move_count == 1
         assert freecell.get_state() == State.LOST
 
-        
         with self.assertRaises(ValueError):
             freecell.make_move(("Kh", "S"))
