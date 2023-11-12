@@ -9,7 +9,7 @@ class TestFreecell(TestCase):
         return [elem for sublist in _list for elem in sublist]
 
     def setup_scenario_various_moves(self) -> FreeCell:
-        return FreeCell()
+        return FreeCell(seed=1)
 
     def setup_scenario_stack_move(self) -> FreeCell:
         freecell = FreeCell()
@@ -175,6 +175,9 @@ class TestFreecell(TestCase):
         assert freecell._move_count == 0
         assert not freecell.get_moves()
         assert freecell.get_state() == State.LOST
+
+        freecell.start_game()
+        assert freecell.get_state() == State.ONGOING
 
     def test_scenario_free_column(self):
         freecell = self.setup_scenario_free_column()
