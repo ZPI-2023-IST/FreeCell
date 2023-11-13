@@ -9,7 +9,7 @@ class TestFreecell(TestCase):
         return [elem for sublist in _list for elem in sublist]
 
     def setup_scenario_various_moves(self) -> FreeCell:
-        return FreeCell()
+        return FreeCell(seed=1)
 
     def setup_scenario_stack_move(self) -> FreeCell:
         freecell = FreeCell()
@@ -130,11 +130,14 @@ class TestFreecell(TestCase):
         assert freecell.make_move(("Js", "F"))
         assert freecell.make_move(("9d", "Ts"))
         assert freecell.make_move(("6c", "F"))
-        assert not freecell.make_move(("Ks", "F"))
+        with self.assertRaises(ValueError):
+            freecell.make_move(("Ks", "F"))
         assert freecell.make_move(("5h", "6s"))
         assert freecell.make_move(("9s", "Td"))
         assert freecell.make_move(("4c", "5h"))
-        assert not freecell.make_move(("Kc", "S"))
+
+        with self.assertRaises(ValueError):
+            freecell.make_move(("Kc", "S"))
         assert freecell.get_state() == State.ONGOING
         assert freecell.make_move(("7s", "F"))
         assert freecell.make_move(("6c", "7d"))
@@ -148,7 +151,9 @@ class TestFreecell(TestCase):
         assert freecell.make_move(("7s", "F"))
         assert freecell.make_move(("8d", "9s"))
         assert freecell.make_move(("7s", "8d"))
-        assert not freecell.make_move(("9s", "Td"))
+
+        with self.assertRaises(ValueError):
+            freecell.make_move(("9s", "Td"))
         assert freecell.make_move(("5c", "F"))
         assert freecell.make_move(("Ac", "S"))
         assert freecell.make_move(("Th", "Js"))
@@ -176,6 +181,9 @@ class TestFreecell(TestCase):
         assert not freecell.get_moves()
         assert freecell.get_state() == State.LOST
 
+        freecell.start_game()
+        assert freecell.get_state() == State.ONGOING
+
     def test_scenario_free_column(self):
         freecell = self.setup_scenario_free_column()
         moves = freecell.get_moves()
@@ -188,7 +196,8 @@ class TestFreecell(TestCase):
         assert freecell._move_count == 1
         assert freecell.get_state() == State.LOST
 
-        assert not freecell.make_move(("Kh", "0"))
+        with self.assertRaises(ValueError):
+            freecell.make_move(("Kh", "0"))
 
     def test_scenario_stack_move(self):
         freecell = self.setup_scenario_stack_move()
@@ -202,4 +211,5 @@ class TestFreecell(TestCase):
         assert freecell._move_count == 1
         assert freecell.get_state() == State.LOST
 
-        assert not freecell.make_move(("Kh", "S"))
+        with self.assertRaises(ValueError):
+            freecell.make_move(("Kh", "S"))

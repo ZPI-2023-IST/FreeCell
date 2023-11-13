@@ -2,10 +2,13 @@ from game.Game import Game, State
 from game.Board import Board
 from game.Deck import Deck
 from game.Move import Move
+from random import Random
 
 
 class FreeCell(Game):
-    def __init__(self, seed=1):
+    def __init__(self, seed: int = None):
+        if seed is None:
+            seed = Random().randint(0, 1000000)
         self._move_count = 0
         self.deck = Deck(seed)
         self.board = Board(self.deck.cards_shuffled())
@@ -85,7 +88,8 @@ class FreeCell(Game):
 
     def make_move(self, move: tuple) -> bool:
         if move not in self.get_moves():
-            return False
+            # return False
+            raise ValueError("Invalid move, not in get_moves()")
 
         card = self.board.find_card_from_string(move[0])
         match move[1]:
@@ -101,6 +105,8 @@ class FreeCell(Game):
                 )
         if move_completed:
             self.increment_move_count()
+        else:
+            raise ValueError("Invalid move, problem with execution")
         return move_completed
 
     def get_state(self) -> State:
@@ -128,3 +134,6 @@ class FreeCell(Game):
             self.board.free_cells,
             list(self.board.suit_stack.values()),
         )
+
+    def start_game(self) -> None:
+        self.__init__()
