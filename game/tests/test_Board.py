@@ -159,19 +159,19 @@ class TestBoard(TestCase):
         # []
         # ]
 
-        self.assertTrue(board.move_to_free_column(card7d))
+        self.assertTrue(board.move_to_free_column(card6c))
         # [
         # [3 of h, 2 of s, 3 of d, 4 of s, 5 of d, 8 of c],
         # [6 of h, 9 of s, 8 of d, 10 of h, 2 of c, 5 of s],
-        # [],
-        # [7 of d, 6 of c],
+        # [7 of d],
+        # [6 of c],
         # [],
         # [],
         # [],
         # []
         # ]
-        self.assertEqual(board.columns[3], [card7d, card6c])
-        self.assertEqual(board.columns[2], [])
+        self.assertEqual(board.columns[3], [card6c])
+        self.assertEqual(board.columns[2], [card7d])
 
         self.assertFalse(board.move_to_free_column(card5d))
 

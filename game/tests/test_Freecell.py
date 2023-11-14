@@ -18,16 +18,16 @@ class TestFreecell(TestCase):
             [Card(13, "d")],
             [Card(13, "s")],
             [Card(13, "c")],
-            [Card(4, "h")],
-            [Card(4, "d"), Card(2, "c")],
-            [Card(4, "s")],
-            [Card(4, "c")],
+            [Card(5, "h")],
+            [Card(5, "d"), Card(10, "c"), Card(2, "c"), Card(3, "c")],
+            [Card(5, "s")],
+            [Card(5, "c")],
         ]
         freecell.board.free_cells = [
             Card(10, "h"),
             Card(10, "d"),
             Card(10, "s"),
-            Card(10, "c"),
+            None,
         ]
         freecell.board.suit_stack = {
             "h": Card(1, "h"),
@@ -201,14 +201,16 @@ class TestFreecell(TestCase):
 
     def test_scenario_stack_move(self):
         freecell = self.setup_scenario_stack_move()
-        moves = freecell.get_moves()
 
-        assert len(moves) == 1
         assert freecell._move_count == 0
         assert freecell.get_state() == State.ONGOING
 
+        assert freecell.make_move(("3c", "F"))
         assert freecell.make_move(("2c", "S"))
-        assert freecell._move_count == 1
+        assert freecell.make_move(("3c", "S"))
+        assert freecell.make_move(("Tc", "F"))
+        assert freecell._move_count == 4
+        assert freecell.get_moves() == []
         assert freecell.get_state() == State.LOST
 
         with self.assertRaises(ValueError):
