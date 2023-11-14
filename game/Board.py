@@ -198,28 +198,35 @@ class Board:
         if card in self.free_cells:
             return self.__move_card_from_free_cell_to_empty_column(card)
 
-        source_column = next((col for col in self.columns if card in col), None)
-        if source_column:
-            cards_to_move = source_column[source_column.index(card) :]
+        source_col = self.__is_on_top(card)
+        dest_col = next(col for col in self.columns if not col)
 
-            valid_sequence = all(
-                card.is_smaller_and_different_color(prev_card)
-                for card, prev_card in zip(cards_to_move[1:], cards_to_move)
-            )
+        dest_col.append(source_col.pop())
+        return True
+        
 
-            if len(cards_to_move) <= self.empty_cells() and valid_sequence:
-                self.columns[
-                    next(i for i, col in enumerate(self.columns) if not col)
-                ].extend(cards_to_move)
+        # source_column = next((col for col in self.columns if card in col), None)
+        # if source_column:
+        #     cards_to_move = source_column[source_column.index(card) :]
 
-                index_of_card_to_move = source_column.index(card)
-                source_column[index_of_card_to_move:] = source_column[
-                    :index_of_card_to_move
-                ]
+        #     valid_sequence = all(
+        #         card.is_smaller_and_different_color(prev_card)
+        #         for card, prev_card in zip(cards_to_move[1:], cards_to_move)
+        #     )
 
-                return True  # Move successful
+        #     if len(cards_to_move) <= self.empty_cells() and valid_sequence:
+        #         self.columns[
+        #             next(i for i, col in enumerate(self.columns) if not col)
+        #         ].extend(cards_to_move)
 
-        return False  # Move unsuccessful
+        #         index_of_card_to_move = source_column.index(card)
+        #         source_column[index_of_card_to_move:] = source_column[
+        #             :index_of_card_to_move
+        #         ]
+
+        #         return True  # Move successful
+
+        # return False  # Move unsuccessful
 
     def __move_card_from_free_cell_to_card(
         self, card_to_move: Card, destination_card: Card
