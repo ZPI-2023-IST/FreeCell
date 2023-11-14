@@ -205,7 +205,6 @@ class Board:
 
         dest_col.append(source_col.pop())
         return True
-    
 
     def __move_card_from_free_cell_to_card(
         self, card_to_move: Card, destination_card: Card
