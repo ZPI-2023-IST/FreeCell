@@ -205,30 +205,6 @@ class Board:
 
         dest_col.append(source_col.pop())
         return True
-        
-
-        # source_column = next((col for col in self.columns if card in col), None)
-        # if source_column:
-        #     cards_to_move = source_column[source_column.index(card) :]
-
-        #     valid_sequence = all(
-        #         card.is_smaller_and_different_color(prev_card)
-        #         for card, prev_card in zip(cards_to_move[1:], cards_to_move)
-        #     )
-
-        #     if len(cards_to_move) <= self.empty_cells() and valid_sequence:
-        #         self.columns[
-        #             next(i for i, col in enumerate(self.columns) if not col)
-        #         ].extend(cards_to_move)
-
-        #         index_of_card_to_move = source_column.index(card)
-        #         source_column[index_of_card_to_move:] = source_column[
-        #             :index_of_card_to_move
-        #         ]
-
-        #         return True  # Move successful
-
-        # return False  # Move unsuccessful
 
     def __move_card_from_free_cell_to_card(
         self, card_to_move: Card, destination_card: Card
