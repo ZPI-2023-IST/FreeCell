@@ -139,6 +139,13 @@ class Board:
         Returns:
             bool: True if the move was successful, False otherwise.
         """
+        if card in self.free_cells:
+            if card.is_larger_and_same_suit(self.suit_stack[card.suit]):
+                self.suit_stack[card.suit] = card
+                self.free_cells[self.free_cells.index(card)] = None
+                return True
+            return False
+
         col = self.__is_on_top(card)
 
         if not col:
