@@ -203,7 +203,6 @@ class Board:
 
         dest_col.append(source_col.pop())
         return True
-        
 
         # source_column = next((col for col in self.columns if card in col), None)
         # if source_column:
