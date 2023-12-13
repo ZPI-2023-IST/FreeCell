@@ -43,7 +43,7 @@ class Deck:
         return f"{self.cards}"
 
     # Generator and card shuffling implementation based on Rosetta Code example [1]
-    
+
     def _random_generator(self, seed: int) -> Generator[int, None, None]:
         """
         A random number generator generator.
@@ -82,6 +82,5 @@ class Deck:
             j = (nc - 1) - r % (nc - i)
             cards[i], cards[j] = cards[j], cards[i]
         return cards
-        
+
     # [1] Rosetta Code. Deal cards for FreeCell. Retrieved from https://rosettacode.org/wiki/Deal_cards_for_FreeCell
-    
